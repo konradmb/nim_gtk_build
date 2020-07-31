@@ -188,7 +188,7 @@ task windowsDocker, "Build Windows binary in Docker":
   run "pwd"
   run fmt"docker build -t {packageName}-windows -f ./Dockerfile-windows ."
   mkdir "build"
-  run &"docker run -i --rm {packageName}-windows sh -c 'cd build/ && tar -c \"{prettyName}*Windows-64.zip\"' | tar -x -C build/"
+  run &"docker run -i --rm {packageName}-windows sh -c 'cd build/ && tar -c \"{prettyName}\"*Windows-64.zip' | tar -x -C build/"
 
 task clean, "Clean build directory":
   cd("build")
