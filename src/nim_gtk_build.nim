@@ -146,14 +146,15 @@ exec "${EXEC}" "$@"
       echo "Removing ", excludedLib
       rmFile "AppDir/usr/lib"/excludedLib
 
-
   downloadAndExtractAppImage("https://github.com/AppImage/AppImageKit/releases/download/12/appimagetool-x86_64.AppImage", "appimagetool")
-  run fmt"VERSION={version} ./appimagetool/AppRun AppDir"
+  mkdir "appimage"
+  cd "appimage"
+  run fmt"VERSION={version} ../appimagetool/AppRun ../AppDir"
 
 task appimageDocker, "Build AppImage in Docker":
   run fmt"docker build -t {packageName} ."
   mkdir "build"
-  run &"docker run -i --rm {packageName} sh -c 'cd build && tar -c \"{prettyName}*AppImage\"' | tar -x -C build/"
+  run &"docker run -i --rm {packageName} sh -c 'cd build && tar -c appimage/*.AppImage' | tar -x -C build/"
 
 task windows, "Build Windows binary (mingw and mingw-gtk required)":
   buildL10nMo()
