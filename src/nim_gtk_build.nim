@@ -179,6 +179,8 @@ task windows, "Build Windows binary (mingw and mingw-gtk required)":
   run "mkdir -p Windows/lib/"
   run "cp -R /usr/x86_64-w64-mingw32/sys-root/mingw/lib/gdk-pixbuf-2.0 Windows/lib/"
   rmFile "Windows/lib/gdk-pixbuf-2.0/2.10.0/loaders.cache"
+  #Temporary fix
+  run "wget -O Windows/lib/gdk-pixbuf-2.0/2.10.0/loaders.cache https://github.com/tschoonj/GTK-for-Windows-Runtime-Environment-Installer/raw/master/gtk-nsis-pack/lib/gdk-pixbuf-2.0/2.10.0/loaders.cache "
   
   mvDir "Windows", fmt"{prettyName}-{version}-Windows-64"
   run &"zip -r -9 \"{prettyName}-{version}-Windows-64.zip\" \"{prettyName}-{version}-Windows-64\""
