@@ -154,7 +154,7 @@ exec "${EXEC}" "$@"
 task appimageDocker, "Build AppImage in Docker":
   run fmt"docker build -t {packageName} ."
   mkdir "build"
-  run &"docker run -i --rm {packageName} sh -c 'cd build && tar -c appimage/*.AppImage' | tar -x -C build/"
+  run &"docker run -i --rm {packageName} sh -c 'cd build/appimage && tar -c *.AppImage' | tar -x -C build/"
 
 task windows, "Build Windows binary (mingw and mingw-gtk required)":
   buildL10nMo()
@@ -194,7 +194,7 @@ task clean, "Clean build directory":
   cd("build")
   rmDir "AppDir", "locale", "squashfs-root"
   rmFile fmt"{packageName}.desktop", fmt"{packageName}.desktop.in"
-  run &"rm \"{prettyName}*.AppImage\""
+  run &"rm \"{prettyName.replace(\" \", \"_\")}\"*.AppImage"
 
 before build:
   buildL10nMo()
